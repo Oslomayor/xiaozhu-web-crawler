@@ -22,7 +22,7 @@ def getLinks(url):
         getInfo(href)
 
 def getInfo(href):
-    global file
+    global file, count
     res = requests.get(href, headers=headers)
     soup = BeautifulSoup(res.text, 'html.parser')
     # 注意 select 方法得到的结果都是列表
@@ -39,8 +39,18 @@ def getInfo(href):
         'hostgender': judgeGender(hostgender[0].get('class')).strip()
     }
     print(data)
+    count += 1
+    file.write('第{}个\n'.format(count))
     for key in data.keys():
-        file.write(key + ':' + data[key] + ' ')
+        # 坑爹的发现在第3个页面上，打印这个字符串报错
+        # '♥' 这个字符写入 txt 文件时报错，会使爬虫终止
+        # '【限时特价】天安门♥故宫♥地铁旁精装三居整租'
+        # UnicodeEncodeError: 'gbk' codec can't encode character '\xbb' in position 8530: illegal multibyte sequence
+        try:
+            file.write(key + ':' + data[key] + '\n')
+        except UnicodeEncodeError:
+            file.write('此处有非法字符' + '\n')
+    file.write('\n')
 
 def judgeGender(class_name):
     if class_name == ['member_ico1']:
@@ -50,12 +60,16 @@ def judgeGender(class_name):
 
 
 def main():
-    global file
+    global file, count
+    count = 0
     urls = ['http://bj.xiaozhu.com/search-duanzufang-p{page}-0/'.format(page=page) for page in range(1, 14)]
     file = open('E:/AllPrj/PyCharmPrj/py-crawler/results-xiaozhu-web-crawler.txt', 'w')
     for url in urls:
         print('page:{url}'.format(url=url))
+        file.write('on page:{url}\n'.format(url=url))
         getLinks(url)
+        # 降低采集频率，防止 IP 限制
+        time.sleep(2)
     file.close()
 
 

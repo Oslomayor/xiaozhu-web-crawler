@@ -28,6 +28,6 @@ except UnicodeEncodeError:
 	file.write('此处有非法字符' + '\n')
 ```
 
-这是第一次比较完整的写了个爬虫，采用了 BeautifulSoup 库 和 html.parser 解析器， 接下来试试不同的解析器
+这是第一次比较完整地写了个爬虫，采用了 BeautifulSoup 库 和 html.parser 解析器， 接下来试试不同的解析器
 
    

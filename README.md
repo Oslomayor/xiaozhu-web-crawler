@@ -1,7 +1,12 @@
 # 统计 http://bj.xiaozhu.com/ 网站上 13 个页面的房租信息
 ### 爬取的信息：标题、地址、价格、房东名称、房东性别和房东头像链接
 
-10:57PM, Feb 6th, 2017
+
+#### 6:55 PM, Feb 10th, 2018
+'♥' 这个字符写入 txt 文件时报错的原因已查明
+爬取酷狗top500歌曲的时候，[解决了这个问题](https://github.com/Oslomayor/kugou-web-crawler/blob/master/README.md)
+
+#### 10:57 PM, Feb 6th, 2018
 
 坑爹的发现在[这个页面上](http://bj.xiaozhu.com/search-duanzufang-p3-0/)  爬虫突然中止，刚开始以为 IP 被限制了
 
@@ -29,5 +34,3 @@ except UnicodeEncodeError:
 ```
 
 这是第一次比较完整地写了个爬虫，采用了 BeautifulSoup 库 和 html.parser 解析器， 接下来试试不同的解析器
-
-   
